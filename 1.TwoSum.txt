@@ -1,0 +1,33 @@
+class Solution {
+public:
+    // int binary_search(vector<int>nums, int s,int t){
+    //     int e=nums.size()-1;
+    //     sort(nums.begin()+s,nums.end());
+    //     while(s<=e){
+    //         int val = (s+e)/2;
+    //         if(nums[val] == t){
+    //             return val;
+    //         }
+    //         else if(nums[val] > t){
+    //             e=val-1;
+    //         }
+    //         else {
+    //             s=val+1;
+    //         }
+    //     }
+    //     return -1;
+    // }
+    vector<int> twoSum(vector<int>& nums, int target) {
+        vector<int>ans;
+        unordered_map<int,int> mpp;
+        for(int i=0;i<nums.size();i++){
+            if(mpp.find(target - nums[i]) != mpp.end()){
+                ans.push_back(mpp[target-nums[i]]);
+                ans.push_back(i);
+                return ans;
+            }
+            mpp[nums[i]] = i;
+        }
+        return ans;
+    }
+};
