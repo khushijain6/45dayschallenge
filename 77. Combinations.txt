@@ -1,0 +1,56 @@
+class Solution {
+public:
+    vector<vector<int>>ans;
+    void solve(int n,int k,vector<int>&v,int i){
+        //base case
+        if(k==0){
+            ans.push_back(v);
+            return;
+        }
+        if(i>n){ 
+            return;
+        }
+        //recursive case
+        //include
+        v.push_back(i);
+        solve(n,k-1,v,i+1);
+        //exclude
+        v.pop_back();
+        solve(n,k,v,i+1);
+        
+    }
+    vector<vector<int>> combine(int n, int k) {
+        vector<int>v;
+        solve(n,k,v,1);
+        return ans;
+    }
+};
+
+
+
+// class Solution {
+// public:
+//     vector<vector<int>>ans;
+//     void solve(int n,int k,vector<int>&v,int i){
+//         //base case
+//         if(i>n){
+//             if(v.size()==k){
+//                 ans.push_back(v);
+//             }
+//             return;
+//         }
+//         //recursive case
+//         //include
+//         v.push_back(i);
+//         solve(n,k,v,i+1);
+//         //exclude
+//         v.pop_back();
+//         solve(n,k,v,i+1);
+        
+//     }
+//     vector<vector<int>> combine(int n, int k) {
+//         vector<int>v;
+//         solve(n,k,v,1);
+//         return ans;
+//     }
+// };
