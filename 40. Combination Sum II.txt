@@ -1,0 +1,39 @@
+class Solution {
+public:
+    vector<vector<int>>ans;
+    void solve(vector<int>& candidates,vector<int>& v,int target,int i){
+        //base case
+        if(target==0){
+            ans.push_back(v);
+            return;
+        }
+        if(i==candidates.size() || target<0){
+            return ;
+        }
+        // if(i==candidates.size()&&target==0){
+        //     ans.push_back(v);
+        //     return;
+        // }
+        // else if(i==candidates.size() || target<0){
+        //     return ;
+        // }
+        // else if(target==0){
+        //     ans.push_back(v);
+        //     return;
+        // }
+        //recursive case
+        //include
+        v.push_back(candidates[i]);
+        solve(candidates,v,target-candidates[i],i+1);
+        v.pop_back();
+        //exclude
+        while(i+1<candidates.size() && candidates[i]==candidates[i+1]) i++;
+        solve(candidates,v,target,i+1);
+    }
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        sort(candidates.begin(),candidates.end());
+        vector<int>v;
+        solve(candidates,v,target,0);
+        return ans;
+    }
+};
