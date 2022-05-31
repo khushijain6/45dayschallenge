@@ -1,0 +1,78 @@
+class Solution {
+public:
+    vector<vector<int>>ans;
+    void perm(vector<int>&nums,int i){
+        //base case
+        if(i==nums.size()){
+            ans.push_back(nums);
+            return;
+        }
+        //recursive case
+        for(int j=i;j<nums.size();j++){
+            sort(nums.begin() + i, nums.end());
+            while(j+1<nums.size() && nums[j]==nums[j+1]) j++;
+            swap(nums[i],nums[j]);
+            perm(nums,i+1);
+            swap(nums[i],nums[j]);//backtracking
+        }
+    }
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        perm(nums,0);
+        return ans;
+    }
+};
+/*class Solution {
+public:
+    vector<vector<int>> ans_vec;
+    vector<int> cur_vec;
+    vector<int> count;
+    int nums_size;
+    void backtrack(int cur_size){
+        if(cur_size == nums_size){
+            ans_vec.push_back(cur_vec);
+            return;
+        }
+        for(int i = 0 ; i < count.size() ; i++){
+            if(count[i] > 0){
+                count[i]--;
+                cur_vec.push_back(i-10);
+                backtrack(cur_size+1);
+                cur_vec.pop_back();
+                count[i]++;
+            }
+        }
+    }
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        nums_size = nums.size();
+        for(int i = 0 ; i < 21 ; i++){
+            count.push_back(0);
+        }
+        for(int i = 0 ; i < nums.size() ; i++){
+            count[nums[i]+10]++;
+        }
+        backtrack(0);
+        return ans_vec;
+    }
+};*/
+
+/*class Solution {
+public:
+    vector<vector<int>>ans;
+    void perm(vector<int>&nums,int i){
+        //base case
+        if(i==nums.size()){
+            ans.push_back(nums);
+            return;
+        }
+        //recursive case
+        for(int j=i;j<nums.size();j++){
+            swap(nums[i],nums[j]);
+            perm(nums,i+1);
+            swap(nums[i],nums[j]);//backtracking
+        }
+    }
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        perm(nums,0);
+        return ans;
+    }
+};*/
