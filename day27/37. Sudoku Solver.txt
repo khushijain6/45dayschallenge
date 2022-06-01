@@ -1,0 +1,51 @@
+class Solution {
+public:
+    bool isallowed(vector<vector<char>> board,int i,int j,char num){
+        int n=9;
+        //row and col
+        for(int k=0;k<n;k++){
+            if(board[i][k]==num || board[k][j]==num){
+                return false;
+            }
+        }
+        //small box
+        n = sqrt(n);
+        int starti=(i/n)*n;
+        int startj = (j/n)*n;
+        for(i=starti;i<starti+n;i++){
+            for(int j=startj;j<startj+n;j++){
+                if(board[i][j]==num){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    bool solveSudokurec(vector<vector<char>>& board,int i,int j){
+        //base case 
+        if(i==9){
+            return true;
+        }
+        if(j==9){
+            return solveSudokurec(board,i+1,0);
+        }
+        if(board[i][j]!='.'){
+            return solveSudokurec(board,i,j+1);
+        }
+        //recursive case
+        for(char num='1';num<='9';num++){
+            if(isallowed(board,i,j,num)){
+                board[i][j]=num;
+                if(solveSudokurec(board,i,j+1)){
+                    return true;
+                }
+                board[i][j]='.';
+            }
+        }
+        return false;
+        
+    }
+    void solveSudoku(vector<vector<char>>& board) {
+        solveSudokurec(board,0,0);
+    }
+};

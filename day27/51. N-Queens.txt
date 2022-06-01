@@ -1,0 +1,54 @@
+class Solution {
+public:
+    bool check(vector<string>temp,int row,int col,int n){
+        //row check
+        for(int i=0;i<=row;i++){
+            if(temp[i][col]=='Q'){
+                return false;
+            }
+        }
+        int i=row,j=col-1;
+        while(i>=0 && j>=0){
+            if(temp[i][j]=='Q'){
+                return false;
+            }
+            i--;
+            j--;
+        }
+        i=row;
+        j=col+1;
+        while(i>=0 && j<n){
+            if(temp[i][j]=='Q'){
+                return false;
+            }
+            i--;
+            j++;
+        }
+        return true;
+    }
+    void rec(int n,vector<string>temp,vector<vector<string>>&ans,int i){
+        //base case
+        if(i==n){
+            ans.push_back(temp);
+            return;
+        }
+        string s(n,'.');  //a string is declared
+        //recursive case
+        for(int j=0;j<n;j++){
+            s[j]='Q';
+            if(check(temp,i-1,j,n)){
+                temp.push_back(s);
+                rec(n,temp,ans,i+1);
+                temp.pop_back();
+            }
+            s[j]='.';
+        }
+        return;
+    }
+    vector<vector<string>> solveNQueens(int n) {
+        vector<vector<string>>ans;
+        vector<string>temp;
+        rec(n,temp,ans,0);
+        return ans;
+    }
+};

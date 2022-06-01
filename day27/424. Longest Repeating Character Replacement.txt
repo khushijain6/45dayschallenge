@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int count(unordered_map<char,int>m){
+        int v=INT_MIN;
+        for(auto it:m){
+            if(it.second>v){
+                v=it.second;
+            }
+        }
+        return v;
+    }
+    int characterReplacement(string s, int k) {
+        int l=0,r=0,ans=1,maxcnt;
+        unordered_map<char,int>m;
+        while(r<s.length()){
+            m[s[r]]++;
+            // maxcnt=max(maxcnt,m[s[r]]);
+            maxcnt=count(m);
+            int winlen=r-l+1;
+            if(winlen-maxcnt<=k){
+                ans=max(ans,winlen);
+            }
+            else{
+                m[s[l]]--;
+                if(m[s[l]]==0) m.erase(s[l]);
+                l++;
+            }
+            r++;
+        }
+        return ans;
+    }
+};
